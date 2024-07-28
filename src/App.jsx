@@ -1,8 +1,12 @@
+import { Post } from "./Post";
 
 export function App() {
   return (
     <>
-    <h1>Hello Ignite!</h1>
+      <Post
+        author="Vânia Gomes"
+        content="Conteúdo do post"
+      />
     </>
   )
 }
