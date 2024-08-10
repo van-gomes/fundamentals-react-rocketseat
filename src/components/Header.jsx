@@ -7,5 +7,5 @@ export function Header() {
             <img src={igniteLogo} alt="Logotipo do Ignite" />
             <strong>Ignite Feed</strong>
         </header>
-    )
+    );
 }
