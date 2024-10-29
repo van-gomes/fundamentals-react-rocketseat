@@ -2,7 +2,8 @@ import { Avatar } from './Avatar';
 import { Comment } from './Comment';
 import styles from './Post.module.css';
 
-export function Post() {
+// eslint-disable-next-line no-unused-vars
+export function Post(props) {
   return (
     <article className={styles.post}>
       <header>
