@@ -1,29 +1,55 @@
+/* eslint-disable react/prop-types */
+import PropTypes from 'prop-types';
+import { format, formatDistanceToNow } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 import { Avatar } from './Avatar';
 import { Comment } from './Comment';
 import styles from './Post.module.css';
 
-// eslint-disable-next-line no-unused-vars
-export function Post(props) {
+export function Post({ post }) {
+  const { author, content, publishedAt } = post;
+
+  const publishedDate = publishedAt instanceof Date ? publishedAt : new Date(publishedAt);
+
+  if (isNaN(publishedDate)) {
+    console.error("Data inválida para publishedAt:", publishedAt);
+    return null;
+  }
+
+  const publishedDateFormatted = format(publishedDate, "d 'de' LLLL 'às' HH:mm'h'", {
+    locale: ptBR,
+  });
+
+  const publishedDateRelativeToNow = formatDistanceToNow(publishedDate, {
+    locale: ptBR,
+    addSuffix: true
+  });
+
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar hasBorder={false} src="https://github.com/diego3g.png" />
+          <Avatar hasBorder={false} src={author.avatarUrl} />
     
           <div className={styles.authorInfo}>
-            <strong>Diego Fernandes</strong>
-            <span>Web Developer</span>
+            <strong>{author.name}</strong>
+            <span>{author.role}</span>
           </div>
         </div>
 
-        <time title="11 de Maio às 08:13h" dateTime="2022-05-11 08:13:00">Publicado há 1h</time>
+        <time title={publishedDateFormatted} dateTime={publishedAt.toISOString()}>
+          {publishedDateRelativeToNow}
+        </time>
       </header>
 
       <div className={styles.content}>
-        <p>Fala galeraa 👋</p>
-        <p>Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀</p>
-        <p>👉<a href="">jane.design/doctorcare</a></p>
-        <p><a href="">#novoprojeto #nlw #rocketseat</a></p>
+        {content.map((line, index) => {
+          if (line.type === 'paragraph') {
+            return <p key={index}>{line.content}</p>;
+          } else if (line.type === 'link') {
+            return <p key={index}><a href="#">{line.content}</a></p>;
+          }
+        })}
       </div>
 
       <form className={styles.commentForm}>
@@ -46,3 +72,20 @@ export function Post(props) {
     </article>
   )
 }
+
+// Definição do componente Post (apenas a parte do PropTypes adaptada)
+Post.propTypes = {
+  author: PropTypes.shape({
+    avatarUrl: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    role: PropTypes.string.isRequired,
+  }).isRequired,
+  content: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.oneOf(['paragraph', 'link']).isRequired, // Especifica os valores possíveis
+      content: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  publishedAt: PropTypes.instanceOf(Date).isRequired,
+  id: PropTypes.number.isRequired, // Opcional, caso id seja usado dentro do componente
+};
