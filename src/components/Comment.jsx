@@ -1,9 +1,14 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
+import PropTypes from 'prop-types';
 import { Avatar } from './Avatar';
 import styles from './Comment.module.css';
 
 import { ThumbsUp, Trash } from 'phosphor-react';
 
-export function Comment() {
+export function Comment({ comment }) {
+  const { content } = comment;
+
   return (
     <div className={styles.comment}>
       <Avatar hasBorder={false} src="https://github.com/diego3g.png" alt="" />
@@ -21,7 +26,7 @@ export function Comment() {
             </button>
           </header>
 
-          <p>Muito bom Devon, parabéns!! 👏👏</p>
+          <p>{content}</p>
         </div>
 
         <footer>
@@ -34,3 +39,12 @@ export function Comment() {
     </div>
   )
 }
+
+Comment.propTypes = {
+  content: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.oneOf(['paragraph', 'link']).isRequired, // Especifica os valores possíveis
+      content: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};

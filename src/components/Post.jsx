@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-unreachable */
+/* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
 import PropTypes from 'prop-types';
 import { format, formatDistanceToNow } from 'date-fns';
@@ -5,8 +8,13 @@ import ptBR from 'date-fns/locale/pt-BR';
 import { Avatar } from './Avatar';
 import { Comment } from './Comment';
 import styles from './Post.module.css';
+import { useState } from 'react';
 
 export function Post({ post }) {
+  const [comments, setComments] = useState([
+    'Post muito bacana, hein?!'
+  ]);
+  const [newCommentText, setNewCommentText] = useState('');
   const { author, content, publishedAt } = post;
 
   const publishedDate = publishedAt instanceof Date ? publishedAt : new Date(publishedAt);
@@ -19,6 +27,10 @@ export function Post({ post }) {
   const publishedDateFormatted = format(publishedDate, "d 'de' LLLL 'às' HH:mm'h'", {
     locale: ptBR,
   });
+
+  function handleNewCommentChange() {
+    setNewCommentText(event.target.value);
+  }
 
   const publishedDateRelativeToNow = formatDistanceToNow(publishedDate, {
     locale: ptBR,
@@ -56,6 +68,8 @@ export function Post({ post }) {
         <strong>Deixe seu feedback</strong>
 
         <textarea
+          value={newCommentText}
+          onChange={handleNewCommentChange}
           placeholder="Deixe um comentário"
         />
 
@@ -65,9 +79,10 @@ export function Post({ post }) {
       </form>
 
       <div className={styles.commentList}>
-        <Comment />
-        <Comment />
-        <Comment />
+        {comments.map(comment => {
+            return <Comment />
+            return <Comment content={comment} />
+          })}
       </div>
     </article>
   )
