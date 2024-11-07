@@ -1,8 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-unreachable */
-/* eslint-disable react/jsx-key */
-/* eslint-disable react/prop-types */
-import PropTypes from 'prop-types';
 import { format, formatDistanceToNow } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import { Avatar } from './Avatar';
@@ -110,20 +105,3 @@ export function Post({ author, content, publishedAt }) {
     </article>
   )
 }
-
-// Definição do componente Post (apenas a parte do PropTypes adaptada)
-// Post.propTypes = {
-//   author: PropTypes.shape({
-//     avatarUrl: PropTypes.string.isRequired,
-//     name: PropTypes.string.isRequired,
-//     role: PropTypes.string.isRequired,
-//   }).isRequired,
-//   content: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       type: PropTypes.oneOf(['paragraph', 'link']).isRequired, // Especifica os valores possíveis
-//       content: PropTypes.string.isRequired,
-//     })
-//   ).isRequired,
-//   publishedAt: PropTypes.instanceOf(Date).isRequired,
-//   id: PropTypes.number.isRequired, // Opcional, caso id seja usado dentro do componente
-// };

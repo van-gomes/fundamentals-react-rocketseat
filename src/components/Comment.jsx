@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-undef */
 import { useState } from 'react';
 import { Avatar } from './Avatar';
 import styles from './Comment.module.css';
