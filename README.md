@@ -16,11 +16,12 @@ O objetivo é aprender os conceitos essenciais do ReactJS, aplicando boas práti
 
 ## Funcionalidades
 
-- Criação de componentes reutilizáveis.
-- Utilização de **props** e **state**.
-- Aplicação do conceito de **imutabilidade**.
-- Renderização de listas e atualização de estados.
-- Estrutura inicial configurada com **Vite + TypeScript**.
+- Renderização de posts dinâmicos com autor, conteúdo e data de publicação.
+- Adição de comentários em posts.
+- Exclusão de comentários existentes.
+- Sistema de curtidas com contador nos comentários.
+- Exibição de datas em formato legível e relativo (ex: "há 1h").
+- Estrutura organizada com componentização (Header, Sidebar, Post, Comment, Avatar).
 
 ---
 
